@@ -18,7 +18,11 @@ const resolvers = {
   },
   User: {
     company: usersResolver.company,
+    area: usersResolver.area,
   },
+  // Area: {
+  //   user: areasResolver.user,
+  // }
 };
 
 export default resolvers;
