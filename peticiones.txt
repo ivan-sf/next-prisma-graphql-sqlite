@@ -1,0 +1,22 @@
+mutation CreateCompany {
+  createCompany(data: { nombre: "Company", direccion: "Dirección de ejemplo", telefono: 123456789 }) {
+    nombre
+  }
+}
+
+
+query Companies {
+  companies {
+    id
+    nombre
+    direccion
+    telefono
+  }
+}
+
+
+query CompanyById {
+  companyById(id: 1) {
+    nombre
+  }
+}
