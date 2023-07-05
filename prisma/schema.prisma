@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -38,3 +38,10 @@ model User{
   areaId Int
   companyId Int
 }
+
+model Hora {
+  pais String
+  hora_actual  DateTime
+  @@unique([pais, hora_actual])
+}
+

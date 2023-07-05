@@ -1,5 +1,6 @@
 import { areasResolver } from '../api/area/resolvers';
 import { companiesResolver } from '../api/companies/resolver';
+import { functionsResolver } from '../api/functions/resolver';
 import { usersResolver } from '../api/users/resolver';
 
 const resolvers = {
@@ -7,6 +8,7 @@ const resolvers = {
     ...companiesResolver.queries,
     ...usersResolver.queries,
     ...areasResolver.queries,
+    ...functionsResolver.queries
   },
   Mutation: {
     ...companiesResolver.mutations,

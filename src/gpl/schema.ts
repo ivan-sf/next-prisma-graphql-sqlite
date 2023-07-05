@@ -27,6 +27,11 @@ const typeDefs = gql`
     area: Area
   }
 
+  type Hora {
+    pais: String
+    hora_actual: String
+  }
+
   input CompanyInput {
     nombre: String
     direccion: String
@@ -52,6 +57,9 @@ const typeDefs = gql`
     users: [User]
     areas: [Area]
     areaById(id: Int!): Area
+    obtenerHora: [Hora]   
+    generarDatosAleatorios: [Int!]!
+    generarTokensAleatorios: [String!]!
   }
 
   type Mutation {
