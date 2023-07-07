@@ -10,38 +10,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model Company{
-  id Int @id @default(autoincrement())
-  nombre String
-  direccion String
-  telefono Int 
-  createdAt DateTime @default(now())
-  users User[]
+model User {
+  id         String @id @default(cuid())
+  name       String
+  email      String    @unique
+  password   String
+  posts      Post[]
+  comments   Comment[]
 }
 
-model Area{
-  id Int @id @default(autoincrement())
-  nombre String
-  telefono Int 
-  createdAt DateTime @default(now())
-  users User[]
+model Post {
+  id           String @id @default(cuid())
+  title        String
+  content      String
+  publicationDate DateTime  @default(now())
+  author       User      @relation(fields: [authorId], references: [id])
+  authorId     String
+  tags         Tag[]
+  comments     Comment[]
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  nombres String
-  apellidos String
-  ciudad String
-  company Company @relation(fields: [companyId],references: [id])
-  area Area @relation(fields: [areaId],references: [id])
-  areaId Int
-  companyId Int
+model Comment {
+  id            String      @id @default(cuid())
+  content       String
+  creationDate  DateTime @default(now())
+  author        User     @relation(fields: [authorId], references: [id])
+  authorId      String
+  post          Post     @relation(fields: [postId], references: [id])
+  postId        String
 }
 
-model Hora {
-  pais String
-  hora_actual  DateTime
-  @@unique([pais, hora_actual])
+model Tag {
+  id        String    @id @default(cuid())
+  name      String
+  posts     Post[]
 }
-

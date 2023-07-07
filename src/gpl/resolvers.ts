@@ -1,30 +1,30 @@
-import { areasResolver } from '../api/area/resolvers';
-import { companiesResolver } from '../api/companies/resolver';
 import { functionsResolver } from '../api/functions/resolver';
-import { usersResolver } from '../api/users/resolver';
+import { postResolver } from '../api/post/resolver';
+import { tagResolver } from '../api/tag/resolver';
+import { userResolver } from '../api/user/resolver';
 
 const resolvers = {
   Query: {
-    ...companiesResolver.queries,
-    ...usersResolver.queries,
-    ...areasResolver.queries,
+    ...userResolver.Query,
+    ...postResolver.Query,
+    ...tagResolver.Query,
     ...functionsResolver.queries
   },
   Mutation: {
-    ...companiesResolver.mutations,
-    ...usersResolver.mutations,
-    ...areasResolver.mutations,
-  },
-  Company: {
-    users: companiesResolver.users,
+    ...userResolver.Mutation,
+    ...postResolver.Mutation,
+    ...tagResolver.Mutation,
   },
   User: {
-    company: usersResolver.company,
-    area: usersResolver.area,
+    ...userResolver.User,
   },
-  // Area: {
-  //   user: areasResolver.user,
-  // }
+  Post: {
+    ...postResolver.Post,
+  },
+  Tag: {
+    ...tagResolver.Tag,
+  },
+
 };
 
 export default resolvers;
