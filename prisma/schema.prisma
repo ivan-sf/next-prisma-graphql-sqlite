@@ -1,5 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Este es tu archivo de esquema Prisma,
+// obtén más información al respecto en la documentación: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -10,38 +10,147 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Modelo de Cuenta (Account)
 model User {
-  id         String @id @default(cuid())
+  id         Int        @id @default(autoincrement())
   name       String
-  email      String    @unique
+  email      String     @unique
   password   String
-  posts      Post[]
-  comments   Comment[]
+  roleId     Int
+  role       Role       @relation(fields: [roleId], references: [id])
+  accountId  Int?
+  account    Account?   
+  stores      Store[]  @relation(name: "StoreOwner")
+  storeMembers Store[]  @relation(name: "StoreMembers")
+  orders     Order[]
 }
 
-model Post {
-  id           String @id @default(cuid())
-  title        String
-  content      String
-  publicationDate DateTime  @default(now())
-  author       User      @relation(fields: [authorId], references: [id])
-  authorId     String
-  tags         Tag[]
-  comments     Comment[]
+
+
+// Modelo de Rol
+model Role {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  users           User[]
+  rolePermissions RolePermission[]
 }
 
-model Comment {
-  id            String      @id @default(cuid())
-  content       String
-  creationDate  DateTime @default(now())
-  author        User     @relation(fields: [authorId], references: [id])
-  authorId      String
-  post          Post     @relation(fields: [postId], references: [id])
-  postId        String
+
+model Account {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @unique
+  user             User?    @relation(fields: [userId], references: [id])
+  billingAddress   String?
+  contactEmail     String?
+  phoneNumber      String?
+  // Otros campos relacionados con la cuenta del usuario
 }
 
-model Tag {
-  id        String    @id @default(cuid())
+// Modelo de Relación Rol-Permiso (RolePermission)
+model RolePermission {
+  id         Int         @id @default(autoincrement())
+  roleId     Int
+  permissionId Int
+  role       Role        @relation(fields: [roleId], references: [id])
+  permission Permission  @relation(fields: [permissionId], references: [id])
+}
+
+// Modelo de Permiso (Permission)
+model Permission {
+  id         Int              @id @default(autoincrement())
+  name       String           @unique
+  rolePermissions RolePermission[]
+}
+
+
+
+// Modelo de Tienda (Store)
+model Store {
+  id        Int        @id @default(autoincrement())
   name      String
-  posts     Post[]
+  address   String
+  userId    Int
+  user      User       @relation(name: "StoreOwner", fields: [userId], references: [id])
+  products  Product[]
+  purchases Purchase[]
+  sales     Sale[]
+  otherUsers User[]    @relation(name: "StoreMembers")
+  tenant     Tenant?    @relation(fields: [tenantId], references: [id])
+  tenantId   Int?
 }
+
+// Modelo de Producto (Product)
+model Product {
+  id        Int        @id @default(autoincrement())
+  name      String
+  price     Float
+  quantity  Int
+  store     Store      @relation(fields: [storeId], references: [id])
+  storeId   Int
+  purchases Purchase[] @relation("ProductPurchase")
+  sales     Sale[]     @relation("ProductSale")
+  orderitems     OrderItem[]
+}
+
+// Modelo de Compra (Purchase)
+model Purchase {
+  id           Int        @id @default(autoincrement())
+  purchaseDate DateTime   @default(now())
+  total        Float
+  store        Store      @relation(fields: [storeId], references: [id])
+  storeId      Int
+  products     Product[]  @relation("ProductPurchase")
+}
+
+// Modelo de Venta (Sale)
+model Sale {
+  id         Int        @id @default(autoincrement())
+  saleDate   DateTime   @default(now())
+  total      Float
+  store      Store      @relation(fields: [storeId], references: [id])
+  storeId    Int
+  products   Product[]  @relation("ProductSale")
+  invoice    Invoice?
+}
+
+// Modelo de Factura (Invoice)
+model Invoice {
+  id         Int      @id @default(autoincrement())
+  number     String
+  sale       Sale    @relation(fields: [saleId], references: [id])
+  saleId     Int      @unique
+}
+
+// Modelo de Inquilino (Tenant)
+model Tenant {
+  id         Int        @id @default(autoincrement())
+  name       String
+  // Otros campos específicos del inquilino
+  stores     Store[]
+}
+
+
+
+// Modelo de Pedido (Order)
+model Order {
+  id         Int         @id @default(autoincrement())
+  number     String
+  status     String
+  userId     Int
+  user       User        @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+}
+
+// Modelo de Ítem de Pedido (OrderItem)
+model OrderItem {
+  id         Int        @id @default(autoincrement())
+  orderId    Int
+  order      Order      @relation(fields: [orderId], references: [id])
+  productId  Int
+  product    Product    @relation(fields: [productId], references: [id])
+  quantity   Int
+  price      Float
+}
+
+
+
