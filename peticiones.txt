@@ -20,3 +20,971 @@ query CompanyById {
     nombre
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { gql } from 'apollo-server';
+
+const typeDefs = gql`
+  
+enum Enum_Priority {
+  VeryImportant
+  Important
+  NotImportant
+}
+  
+
+enum Enum_Symbol {
+  Green
+  Yellow
+  Red
+}
+  
+
+enum Enum_Code {
+  NTF
+  M
+  PO
+  EC_S
+  EC_A
+}
+  
+
+enum Enum_CollectionStatus {
+  CorrectionsNeeded
+  Complete
+  Pending
+  NotApplicable
+}
+  
+
+enum Enum_Signature {
+  Electronic
+  Scan
+}
+  
+
+enum Enum_VisitType {
+  SQV
+  SIV
+  IMV
+  RIMV
+  COV
+}
+  
+
+enum Enum_Region {
+  APAC
+  EUROPE
+  LATAM
+  NORTH_AMERICA
+  OCEANIA
+}
+  
+
+enum Enum_Title {
+  MR
+  MRS
+  MS
+  DR
+  PROF
+}
+  
+
+enum Enum_Responsible {
+  Sponsor
+  CogenTech
+  Third_Party
+}
+  
+
+enum Enum_BillingUV {
+  OneTime
+  PerAudit
+  PerBinder
+  PerDataLock
+  PerDay
+  PerDocument
+  PerDossier
+  PerEditCheck
+  PerEvent
+  PerForm
+  PerHour
+  PerMeeting
+  PerMember
+  PerMonth
+  PerQC
+  PerQuarter
+  PerQuery
+  PerReport
+  PerSet_up
+  PerShipment
+  PerSite
+  PerSite_visit
+  PerStudy
+  PerSubject
+  PerSubmission
+  PerTraining
+  PerTransfer
+  PerUnit
+  PerUpdate
+  PerUser_month
+  PerVisit
+  PerWeek
+}
+  
+
+enum Enum_RoleName {
+  Admin
+  Client
+}
+  
+  
+  
+  #--------------------------Account-----------------------
+  type Account{
+    id: ID!,userId: String!,type: String!,provider: String!,providerAccountId: String!,refresh_token: String,access_token: String,expires_at: Int,token_type: String,scope: String,id_token: String,session_state: String,oauth_token_secret: String,oauth_token: String,user: User!
+  }
+  input AccountCreateInput{
+    userId: String!,type: String!,provider: String!,providerAccountId: String!,refresh_token: String,access_token: String,expires_at: Int,token_type: String,scope: String,id_token: String,session_state: String,oauth_token_secret: String,oauth_token: String
+  }
+  input AccountWhereUniqueInput{
+    id:String!
+  }
+  input AccountUpdateInput{
+  userId: String,type: String,provider: String,providerAccountId: String,refresh_token: String,access_token: String,expires_at: Int,token_type: String,scope: String,id_token: String,session_state: String,oauth_token_secret: String,oauth_token: String
+  }
+  ,
+  #--------------------------Page-----------------------
+  type Page{
+    id: ID!,name: String!,route: String!,isPublic: Boolean!,imageLink: String,customizable: Boolean!,roles: [Role],createdAt: String!,updatedAt: String!
+  }
+  input PageCreateInput{
+    name: String!,route: String!,imageLink: String
+  }
+  input PageWhereUniqueInput{
+    id:String!
+  }
+  input PageUpdateInput{
+  name: String,route: String,isPublic: Boolean,imageLink: String,customizable: Boolean
+  }
+  ,
+  #--------------------------Role-----------------------
+  type Role{
+    id: ID!,name: String!,pages: [Page],icon: String,users: [User],createdAt: String!,updatedAt: String!
+  }
+  input RoleCreateInput{
+    name: String!,icon: String
+  }
+  input RoleWhereUniqueInput{
+    id:String!
+  }
+  input RoleUpdateInput{
+  name: String,icon: String
+  }
+  ,
+  #--------------------------Session-----------------------
+  type Session{
+    id: ID!,sessionToken: String!,userId: String!,expires: String!,user: User!
+  }
+  input SessionCreateInput{
+    sessionToken: String!,userId: String!,expires: String!
+  }
+  input SessionWhereUniqueInput{
+    id:String!
+  }
+  input SessionUpdateInput{
+  sessionToken: String,userId: String,expires: String
+  }
+  ,
+  #--------------------------Region-----------------------
+  type Region{
+    id: ID!,name: String!,code: String!,countries: [Country],regionsPercentage: [RegionPercentage],createdAt: String!,updatedAt: String!
+  }
+  input RegionCreateInput{
+    name: String!,code: String!
+  }
+  input RegionWhereUniqueInput{
+    id:String!
+  }
+  input RegionUpdateInput{
+  name: String,code: String
+  }
+  ,
+  #--------------------------RegionPercentage-----------------------
+  type RegionPercentage{
+    id: ID!,region: Region!,regionId: String!,percentage: Float!,project: Project!,projectId: String!,createdAt: String!,updatedAt: String!
+  }
+  input RegionPercentageCreateInput{
+    regionId: String!,percentage: Float!,projectId: String!
+  }
+  input RegionPercentageWhereUniqueInput{
+    id:String!
+  }
+  input RegionPercentageUpdateInput{
+  regionId: String,percentage: Float,projectId: String
+  }
+  ,
+  #--------------------------Country-----------------------
+  type Country{
+    id: ID!,name: String!,code: String!,states: [State],region: Region!,regionId: String!,createdAt: String!,updatedAt: String!
+  }
+  input CountryCreateInput{
+    name: String!,code: String!,regionId: String!
+  }
+  input CountryWhereUniqueInput{
+    id:String!
+  }
+  input CountryUpdateInput{
+  name: String,code: String,regionId: String
+  }
+  ,
+  #--------------------------State-----------------------
+  type State{
+    id: ID!,name: String!,code: String!,cities: [City],country: Country!,countryId: String!,createdAt: String!,updatedAt: String!
+  }
+  input StateCreateInput{
+    name: String!,code: String!,countryId: String!
+  }
+  input StateWhereUniqueInput{
+    id:String!
+  }
+  input StateUpdateInput{
+  name: String,code: String,countryId: String
+  }
+  ,
+  #--------------------------City-----------------------
+  type City{
+    id: ID!,name: String!,code: String!,state: State!,stateId: String!,Company: [Company],Profile: [Profile],createdAt: String!,updatedAt: String!
+  }
+  input CityCreateInput{
+    name: String!,code: String!,stateId: String!
+  }
+  input CityWhereUniqueInput{
+    id:String!
+  }
+  input CityUpdateInput{
+  name: String,code: String,stateId: String
+  }
+  ,
+  #--------------------------User-----------------------
+  type User{
+    id: ID!,deleted: Boolean!,enabled: Boolean!,email: String!,emailVerified: String,image: String,company: Company!,companyId: String!,firstName: String!,lastName: String!,profile: Profile,siteNumber: String,projectNews: [ProjectNews],teamMemberOf: [TeamMembers],roles: [Role],accounts: [Account],sessions: [Session],membersCreatedBy: [TeamMembers],membersUpdatedBy: [TeamMembers],projectsCreatedBy: [Project],projectsUpdatedBy: [Project],rrActivitiesAssignedTo: [RRActivity],rrActivitiesCreatedBy: [RRActivity],rrActivitiesUpdatedBy: [RRActivity],meetingsCreatedBy: [MeetingMinutes],meetingsUpdatedBy: [MeetingMinutes],sitesRegulatoryBinderCreated: [SiteRegulatoryBinder],sitesRegulatoryBinderUpdated: [SiteRegulatoryBinder],matrixStudyDocumentsCreatedBy: [MatrixStudyDocuments],matrixStudyDocumentsUpdatedBy: [MatrixStudyDocuments],visitsReportTrackerCreatedBy: [VisitReportTracker],visitsReportTrackerUpdatedBy: [VisitReportTracker],tmfsTrackersCreatedBy: [TMFsTracker],tmfsTrackersUpdatedBy: [TMFsTracker],createdAt: String!,updatedAt: String!
+  }
+  input UserCreateInput{
+    email: String!,emailVerified: String,image: String,companyId: String!,firstName: String!,lastName: String!,siteNumber: String
+  }
+  input UserWhereUniqueInput{
+    id:String!
+  }
+  input UserUpdateInput{
+  deleted: Boolean,enabled: Boolean,email: String,emailVerified: String,image: String,companyId: String,firstName: String,lastName: String,siteNumber: String
+  }
+  ,
+  #--------------------------Company-----------------------
+  type Company{
+    id: ID!,name: String!,address: String,projects: [Project],city: City!,cityId: String!,User: [User],createdAt: String!,updatedAt: String!
+  }
+  input CompanyCreateInput{
+    name: String!,address: String,cityId: String!
+  }
+  input CompanyWhereUniqueInput{
+    id:String!
+  }
+  input CompanyUpdateInput{
+  name: String,address: String,cityId: String
+  }
+  ,
+  #--------------------------Profile-----------------------
+  type Profile{
+    id: ID!,phone: String,city: City!,cityId: String!,title: Enum_Title!,address: String,user: User!,userId: String!,createdAt: String!,updatedAt: String!
+  }
+  input ProfileCreateInput{
+    phone: String,cityId: String!,title: Enum_Title!,address: String,userId: String!
+  }
+  input ProfileWhereUniqueInput{
+    id:String!
+  }
+  input ProfileUpdateInput{
+  phone: String,cityId: String,title: Enum_Title,address: String,userId: String
+  }
+  ,
+  #--------------------------Project-----------------------
+  type Project{
+    id: ID!,sponsorName: String!,studyName: String!,firstName: String!,lastName: String!,email: String!,country: String!,phone: String!,studyDesign: [StudyDesign],studyType: StudyType!,studyTypeId: String!,diseaseTargetMarket: DiseaseTargetMarket!,diseaseTargetMarketId: String!,condition: Condition!,conditionId: String!,services: [Service],company: Company!,companyId: String!,regionDistribution: [RegionPercentage],numberSubjects: Int!,numberUsersSponsor: Int!,numberUsersClinicalProjectManager: Int!,numberUsersClinicalResearchAssociate: Int!,numberUsersRegulatory: Int!,numberUsersClinicalProjectAssistant: Int!,numberUsersThirdParty: Int!,numberSitesFeasibility: Int!,numberSitesQualification: Int!,numberSitesSelection: Int!,numberEnrollmentSupport: Int!,numberEnrollmentSupportFrequency: Int!,siteInitiationPlan: Int!,enrollmentSupportSite: Int!,imvSite: Int!,imvRemote: Int!,imvTelephone: Int!,startUpPhase: Int!,screeningEnrollmentPhase: Int!,followUpPhase: Int!,closeOutPhase: Int!,projectNews: [ProjectNews],description: String,members: [TeamMembers],rbmPercentageSubjects: Float,rbmPercentageInformedConReview: Float,rbmPercentageInclusionCritReview: Float,rbmPercentageExclusionCritReview: Float,rbmPercentageEndpointsReview: Float,rbmPercentageConcomitantsMedReview: Float,rbmPercentageAdverseEventsReview: Float,rbmPercentageMajorDevProtReview: Float,rbmPercentageDevicAccountabilityReview: Float,rrActivity: RRActivity,matrixStudyDocument: MatrixStudyDocuments,visitReportTracker: VisitReportTracker,tmfsTrackers: [TMFsTracker],sitesRegulatoryBinder: [SiteRegulatoryBinder],meetingMinutes: [MeetingMinutes],createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input ProjectCreateInput{
+    sponsorName: String!,studyName: String!,firstName: String!,lastName: String!,email: String!,country: String!,phone: String!,studyTypeId: String!,diseaseTargetMarketId: String!,conditionId: String!,companyId: String!,numberSubjects: Int!,numberUsersSponsor: Int!,numberUsersClinicalProjectManager: Int!,numberUsersClinicalResearchAssociate: Int!,numberUsersRegulatory: Int!,numberUsersClinicalProjectAssistant: Int!,numberUsersThirdParty: Int!,numberSitesFeasibility: Int!,numberSitesQualification: Int!,numberSitesSelection: Int!,numberEnrollmentSupport: Int!,numberEnrollmentSupportFrequency: Int!,siteInitiationPlan: Int!,enrollmentSupportSite: Int!,imvSite: Int!,imvRemote: Int!,imvTelephone: Int!,startUpPhase: Int!,screeningEnrollmentPhase: Int!,followUpPhase: Int!,closeOutPhase: Int!,description: String,rbmPercentageSubjects: Float,rbmPercentageInformedConReview: Float,rbmPercentageInclusionCritReview: Float,rbmPercentageExclusionCritReview: Float,rbmPercentageEndpointsReview: Float,rbmPercentageConcomitantsMedReview: Float,rbmPercentageAdverseEventsReview: Float,rbmPercentageMajorDevProtReview: Float,rbmPercentageDevicAccountabilityReview: Float,createdById: String!,updatedById: String!
+  }
+  input ProjectWhereUniqueInput{
+    id:String!
+  }
+  input ProjectUpdateInput{
+  sponsorName: String,studyName: String,firstName: String,lastName: String,email: String,country: String,phone: String,studyTypeId: String,diseaseTargetMarketId: String,conditionId: String,companyId: String,numberSubjects: Int,numberUsersSponsor: Int,numberUsersClinicalProjectManager: Int,numberUsersClinicalResearchAssociate: Int,numberUsersRegulatory: Int,numberUsersClinicalProjectAssistant: Int,numberUsersThirdParty: Int,numberSitesFeasibility: Int,numberSitesQualification: Int,numberSitesSelection: Int,numberEnrollmentSupport: Int,numberEnrollmentSupportFrequency: Int,siteInitiationPlan: Int,enrollmentSupportSite: Int,imvSite: Int,imvRemote: Int,imvTelephone: Int,startUpPhase: Int,screeningEnrollmentPhase: Int,followUpPhase: Int,closeOutPhase: Int,description: String,rbmPercentageSubjects: Float,rbmPercentageInformedConReview: Float,rbmPercentageInclusionCritReview: Float,rbmPercentageExclusionCritReview: Float,rbmPercentageEndpointsReview: Float,rbmPercentageConcomitantsMedReview: Float,rbmPercentageAdverseEventsReview: Float,rbmPercentageMajorDevProtReview: Float,rbmPercentageDevicAccountabilityReview: Float,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------Condition-----------------------
+  type Condition{
+    id: ID!,name: String!,level: Int!,enabled: Boolean!,projects: [Project],createdAt: String!,updatedAt: String!
+  }
+  input ConditionCreateInput{
+    name: String!,level: Int!
+  }
+  input ConditionWhereUniqueInput{
+    id:String!
+  }
+  input ConditionUpdateInput{
+  name: String,level: Int,enabled: Boolean
+  }
+  ,
+  #--------------------------DiseaseTargetMarket-----------------------
+  type DiseaseTargetMarket{
+    id: ID!,name: String!,level: Int!,enabled: Boolean!,projects: [Project],createdAt: String!,updatedAt: String!
+  }
+  input DiseaseTargetMarketCreateInput{
+    name: String!,level: Int!
+  }
+  input DiseaseTargetMarketWhereUniqueInput{
+    id:String!
+  }
+  input DiseaseTargetMarketUpdateInput{
+  name: String,level: Int,enabled: Boolean
+  }
+  ,
+  #--------------------------StudyType-----------------------
+  type StudyType{
+    id: ID!,name: String!,level: Int!,enabled: Boolean!,projects: [Project],createdAt: String!,updatedAt: String!
+  }
+  input StudyTypeCreateInput{
+    name: String!,level: Int!
+  }
+  input StudyTypeWhereUniqueInput{
+    id:String!
+  }
+  input StudyTypeUpdateInput{
+  name: String,level: Int,enabled: Boolean
+  }
+  ,
+  #--------------------------StudyDesign-----------------------
+  type StudyDesign{
+    id: ID!,name: String!,level: Int!,enabled: Boolean!,projects: [Project],createdAt: String!,updatedAt: String!
+  }
+  input StudyDesignCreateInput{
+    name: String!,level: Int!
+  }
+  input StudyDesignWhereUniqueInput{
+    id:String!
+  }
+  input StudyDesignUpdateInput{
+  name: String,level: Int,enabled: Boolean
+  }
+  ,
+  #--------------------------Service-----------------------
+  type Service{
+    id: ID!,name: String!,level: Int!,enabled: Boolean!,projects: [Project],createdAt: String!,updatedAt: String!
+  }
+  input ServiceCreateInput{
+    name: String!,level: Int!
+  }
+  input ServiceWhereUniqueInput{
+    id:String!
+  }
+  input ServiceUpdateInput{
+  name: String,level: Int,enabled: Boolean
+  }
+  ,
+  #--------------------------ProjectNews-----------------------
+  type ProjectNews{
+    id: ID!,comment: String!,user: User!,userId: String!,project: Project!,projectId: String!,createdAt: String!,updatedAt: String!
+  }
+  input ProjectNewsCreateInput{
+    comment: String!,userId: String!,projectId: String!
+  }
+  input ProjectNewsWhereUniqueInput{
+    id:String!
+  }
+  input ProjectNewsUpdateInput{
+  comment: String,userId: String,projectId: String
+  }
+  ,
+  #--------------------------TeamMembers-----------------------
+  type TeamMembers{
+    id: ID!,user: User!,userId: String!,project: Project!,projectId: String!,position: StudyRole!,positionId: String!,studyMemberStatus: Boolean,statusLearUpProgramManagementSystem: Boolean!,statusLearUpGxPDocumentRepository: String!,statusEDC: String!,studyStartDate: String!,studyEndDate: String!,notifications: [Notification],ownerMeetings: [MeetingMinutes],attendeesMeetings: [MeetingMinutes],createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input TeamMembersCreateInput{
+    userId: String!,projectId: String!,positionId: String!,statusLearUpProgramManagementSystem: Boolean!,statusLearUpGxPDocumentRepository: String!,statusEDC: String!,studyStartDate: String!,studyEndDate: String!,createdById: String!,updatedById: String!
+  }
+  input TeamMembersWhereUniqueInput{
+    id:String!
+  }
+  input TeamMembersUpdateInput{
+  userId: String,projectId: String,positionId: String,studyMemberStatus: Boolean,statusLearUpProgramManagementSystem: Boolean,statusLearUpGxPDocumentRepository: String,statusEDC: String,studyStartDate: String,studyEndDate: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------RRActivity-----------------------
+  type RRActivity{
+    id: ID!,responsible: Enum_Responsible!,department: Department!,departmentId: String!,classCostCenter: ClassCostCenter!,classCostCenterId: String!,billingUnitValue: Enum_BillingUV!,qty: Int!,qtyAmendment: Int,acceptanceAmendment: Boolean,totalCostAmendment: Int,totalAdditionalQty: Int,unitCost: Float!,totalOriginalCost: Float!,overallTotalEstimatedBudget: Float!,balanceQty: Int!,percentageExecutionQty: Float!,balanceBudget: Float!,percentageExecutionBudget: Float!,assignedTo: User!,userId: String!,dedicatedHoursPerMonth: Int!,mByMQtyExecution: Int!,mByMExecutionPrice: Float!,mByMQtyForecast: Int!,mByMForecastPrice: Float!,percentageCompleted: Float!,project: Project!,projectId: String!,createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input RRActivityCreateInput{
+    responsible: Enum_Responsible!,departmentId: String!,classCostCenterId: String!,billingUnitValue: Enum_BillingUV!,qty: Int!,qtyAmendment: Int,acceptanceAmendment: Boolean,totalCostAmendment: Int,totalAdditionalQty: Int,unitCost: Float!,totalOriginalCost: Float!,overallTotalEstimatedBudget: Float!,balanceQty: Int!,percentageExecutionQty: Float!,balanceBudget: Float!,percentageExecutionBudget: Float!,userId: String!,dedicatedHoursPerMonth: Int!,mByMQtyExecution: Int!,mByMExecutionPrice: Float!,mByMQtyForecast: Int!,mByMForecastPrice: Float!,percentageCompleted: Float!,projectId: String!,createdById: String!,updatedById: String!
+  }
+  input RRActivityWhereUniqueInput{
+    id:String!
+  }
+  input RRActivityUpdateInput{
+  responsible: Enum_Responsible,departmentId: String,classCostCenterId: String,billingUnitValue: Enum_BillingUV,qty: Int,qtyAmendment: Int,acceptanceAmendment: Boolean,totalCostAmendment: Int,totalAdditionalQty: Int,unitCost: Float,totalOriginalCost: Float,overallTotalEstimatedBudget: Float,balanceQty: Int,percentageExecutionQty: Float,balanceBudget: Float,percentageExecutionBudget: Float,userId: String,dedicatedHoursPerMonth: Int,mByMQtyExecution: Int,mByMExecutionPrice: Float,mByMQtyForecast: Int,mByMForecastPrice: Float,percentageCompleted: Float,projectId: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------StudyRole-----------------------
+  type StudyRole{
+    id: ID!,name: String!,studyRoleUsers: [TeamMembers],createdAt: String!,updatedAt: String!
+  }
+  input StudyRoleCreateInput{
+    name: String!
+  }
+  input StudyRoleWhereUniqueInput{
+    id:String!
+  }
+  input StudyRoleUpdateInput{
+  name: String
+  }
+  ,
+  #--------------------------MatrixStudyDocuments-----------------------
+  type MatrixStudyDocuments{
+    id: ID!,category: String!,comments: String,version: String,documents: [Document],project: Project!,projectId: String!,createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input MatrixStudyDocumentsCreateInput{
+    category: String!,comments: String,version: String,projectId: String!,createdById: String!,updatedById: String!
+  }
+  input MatrixStudyDocumentsWhereUniqueInput{
+    id:String!
+  }
+  input MatrixStudyDocumentsUpdateInput{
+  category: String,comments: String,version: String,projectId: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------Notification-----------------------
+  type Notification{
+    id: ID!,message: String!,user: TeamMembers!,userId: String!,visitReportTracker: VisitReportTracker!,visitReportTrackerId: String!,createdAt: String!,updatedAt: String!
+  }
+  input NotificationCreateInput{
+    message: String!,userId: String!,visitReportTrackerId: String!
+  }
+  input NotificationWhereUniqueInput{
+    id:String!
+  }
+  input NotificationUpdateInput{
+  message: String,userId: String,visitReportTrackerId: String
+  }
+  ,
+  #--------------------------Document-----------------------
+  type Document{
+    id: ID!,name: String!,files: [DocumentFile],matrixStudyDocument: MatrixStudyDocuments!,matrixStudyDocumentId: String!,createdAt: String!,updatedAt: String!
+  }
+  input DocumentCreateInput{
+    name: String!,matrixStudyDocumentId: String!
+  }
+  input DocumentWhereUniqueInput{
+    id:String!
+  }
+  input DocumentUpdateInput{
+  name: String,matrixStudyDocumentId: String
+  }
+  ,
+  #--------------------------DocumentFile-----------------------
+  type DocumentFile{
+    id: ID!,name: String!,type: String!,url: String!,shareFileUrl: String,smartSheetUrl: String,document: Document!,documentId: String!,createdAt: String!,updatedAt: String!
+  }
+  input DocumentFileCreateInput{
+    name: String!,type: String!,url: String!,shareFileUrl: String,smartSheetUrl: String,documentId: String!
+  }
+  input DocumentFileWhereUniqueInput{
+    id:String!
+  }
+  input DocumentFileUpdateInput{
+  name: String,type: String,url: String,shareFileUrl: String,smartSheetUrl: String,documentId: String
+  }
+  ,
+  #--------------------------VerificationRequest-----------------------
+  type VerificationRequest{
+    id: ID!,identifier: String!,token: String!,expires: String!,createdAt: String!,updatedAt: String!
+  }
+  input VerificationRequestCreateInput{
+    identifier: String!,token: String!,expires: String!
+  }
+  input VerificationRequestWhereUniqueInput{
+    id:String!
+  }
+  input VerificationRequestUpdateInput{
+  identifier: String,token: String,expires: String
+  }
+  ,
+  #--------------------------VisitReportTracker-----------------------
+  type VisitReportTracker{
+    id: ID!,siteNumber: String!,siteName: String!,piLastName: String!,craName: String!,teamNotifications: [Notification],visitType: Enum_VisitType!,visitNumber: Int,confirmationLetterDate: String!,visitStartDate: String!,visitEndDate: String!,submitToCPMDeadlineDate: String!,daysToSubmit: Int!,cpmReviewFinalizationDate: String!,visitReportDeadlineDate: String!,comments: String,visitReportFinalizationDate: String!,daysToDeadline: Int!,project: Project!,projectId: String!,followUpLetterDate: String!,tmfsTrackers: [TMFsTracker],createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input VisitReportTrackerCreateInput{
+    siteNumber: String!,siteName: String!,piLastName: String!,craName: String!,visitType: Enum_VisitType!,visitNumber: Int,confirmationLetterDate: String!,visitStartDate: String!,visitEndDate: String!,submitToCPMDeadlineDate: String!,daysToSubmit: Int!,cpmReviewFinalizationDate: String!,visitReportDeadlineDate: String!,comments: String,visitReportFinalizationDate: String!,daysToDeadline: Int!,projectId: String!,followUpLetterDate: String!,createdById: String!,updatedById: String!
+  }
+  input VisitReportTrackerWhereUniqueInput{
+    id:String!
+  }
+  input VisitReportTrackerUpdateInput{
+  siteNumber: String,siteName: String,piLastName: String,craName: String,visitType: Enum_VisitType,visitNumber: Int,confirmationLetterDate: String,visitStartDate: String,visitEndDate: String,submitToCPMDeadlineDate: String,daysToSubmit: Int,cpmReviewFinalizationDate: String,visitReportDeadlineDate: String,comments: String,visitReportFinalizationDate: String,daysToDeadline: Int,projectId: String,followUpLetterDate: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------TMFsTracker-----------------------
+  type TMFsTracker{
+    id: ID!,zoneNumber: String!,sectionNumber: String!,artifactNumber: String!,code: Enum_Code,codeNumber: String,documentName: String!,versionNumber: String!,documentDate: String!,expirationDate: String,daysToExpire: String,collectionStatus: Enum_CollectionStatus!,inTMF: Boolean!,signature: Enum_Signature!,link: String!,comments: String,site: VisitReportTracker,siteId: String,today: String!,regBinder: Boolean,imv: Boolean,projectId: String!,project: Project!,createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input TMFsTrackerCreateInput{
+    zoneNumber: String!,sectionNumber: String!,artifactNumber: String!,code: Enum_Code,codeNumber: String,documentName: String!,versionNumber: String!,documentDate: String!,expirationDate: String,daysToExpire: String,collectionStatus: Enum_CollectionStatus!,signature: Enum_Signature!,link: String!,comments: String,siteId: String,projectId: String!,createdById: String!,updatedById: String!
+  }
+  input TMFsTrackerWhereUniqueInput{
+    id:String!
+  }
+  input TMFsTrackerUpdateInput{
+  zoneNumber: String,sectionNumber: String,artifactNumber: String,code: Enum_Code,codeNumber: String,documentName: String,versionNumber: String,documentDate: String,expirationDate: String,daysToExpire: String,collectionStatus: Enum_CollectionStatus,inTMF: Boolean,signature: Enum_Signature,link: String,comments: String,siteId: String,today: String,regBinder: Boolean,imv: Boolean,projectId: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------SiteRegulatoryBinder-----------------------
+  type SiteRegulatoryBinder{
+    id: ID!,notApplicable: Boolean,percentageComplete: Float!,description: String!,date: String,cpaCpaSiteComplete: Enum_Symbol!,cpaCpaSiteUpload: Boolean!,cogentechQC: Enum_Symbol!,cogentechQCApproved: Boolean!,statusTMF: Enum_Symbol!,filledInTMF: Boolean,project: Project!,projectId: String!,createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input SiteRegulatoryBinderCreateInput{
+    percentageComplete: Float!,description: String!,date: String,cpaCpaSiteUpload: Boolean!,filledInTMF: Boolean,projectId: String!,createdById: String!,updatedById: String!
+  }
+  input SiteRegulatoryBinderWhereUniqueInput{
+    id:String!
+  }
+  input SiteRegulatoryBinderUpdateInput{
+  notApplicable: Boolean,percentageComplete: Float,description: String,date: String,cpaCpaSiteComplete: Enum_Symbol,cpaCpaSiteUpload: Boolean,cogentechQC: Enum_Symbol,cogentechQCApproved: Boolean,statusTMF: Enum_Symbol,filledInTMF: Boolean,projectId: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------MeetingMinutes-----------------------
+  type MeetingMinutes{
+    id: ID!,done: Boolean,followUp: Boolean,meetingTopic: String!,description: String,owner: TeamMembers!,ownerId: String!,priority: Enum_Priority!,start: String!,end: String!,otherNotes: String,attendees: [TeamMembers],projectId: String!,project: Project!,createdBy: User!,createdById: String!,updatedBy: User!,updatedById: String!,createdAt: String!,updatedAt: String!
+  }
+  input MeetingMinutesCreateInput{
+    meetingTopic: String!,description: String,ownerId: String!,start: String!,end: String!,otherNotes: String,projectId: String!,createdById: String!,updatedById: String!
+  }
+  input MeetingMinutesWhereUniqueInput{
+    id:String!
+  }
+  input MeetingMinutesUpdateInput{
+  done: Boolean,followUp: Boolean,meetingTopic: String,description: String,ownerId: String,priority: Enum_Priority,start: String,end: String,otherNotes: String,projectId: String,createdById: String,updatedById: String
+  }
+  ,
+  #--------------------------Department-----------------------
+  type Department{
+    id: ID!,name: String!,enabled: Boolean!,rrActivities: [RRActivity],createdAt: String!,updatedAt: String!
+  }
+  input DepartmentCreateInput{
+    name: String!
+  }
+  input DepartmentWhereUniqueInput{
+    id:String!
+  }
+  input DepartmentUpdateInput{
+  name: String,enabled: Boolean
+  }
+  ,
+  #--------------------------ClassCostCenter-----------------------
+  type ClassCostCenter{
+    id: ID!,name: String!,enabled: Boolean!,rrActivities: [RRActivity],createdAt: String!,updatedAt: String!
+  }
+  input ClassCostCenterCreateInput{
+    name: String!
+  }
+  input ClassCostCenterWhereUniqueInput{
+    id:String!
+  }
+  input ClassCostCenterUpdateInput{
+  name: String,enabled: Boolean
+  }
+  
+
+  type Mutation {
+    
+    # Account
+    createAccount(data:AccountCreateInput):Account
+    updateAccount(where:AccountWhereUniqueInput!, data:AccountUpdateInput ):Account  
+    upsertAccount(where:AccountWhereUniqueInput!, data:AccountCreateInput ):Account    
+    deleteAccount(where: AccountWhereUniqueInput!):Account
+  ,
+    # Page
+    createPage(data:PageCreateInput):Page
+    updatePage(where:PageWhereUniqueInput!, data:PageUpdateInput ):Page  
+    upsertPage(where:PageWhereUniqueInput!, data:PageCreateInput ):Page    
+    deletePage(where: PageWhereUniqueInput!):Page
+  ,
+    # Role
+    createRole(data:RoleCreateInput):Role
+    updateRole(where:RoleWhereUniqueInput!, data:RoleUpdateInput ):Role  
+    upsertRole(where:RoleWhereUniqueInput!, data:RoleCreateInput ):Role    
+    deleteRole(where: RoleWhereUniqueInput!):Role
+  ,
+    # Session
+    createSession(data:SessionCreateInput):Session
+    updateSession(where:SessionWhereUniqueInput!, data:SessionUpdateInput ):Session  
+    upsertSession(where:SessionWhereUniqueInput!, data:SessionCreateInput ):Session    
+    deleteSession(where: SessionWhereUniqueInput!):Session
+  ,
+    # Region
+    createRegion(data:RegionCreateInput):Region
+    updateRegion(where:RegionWhereUniqueInput!, data:RegionUpdateInput ):Region  
+    upsertRegion(where:RegionWhereUniqueInput!, data:RegionCreateInput ):Region    
+    deleteRegion(where: RegionWhereUniqueInput!):Region
+  ,
+    # RegionPercentage
+    createRegionPercentage(data:RegionPercentageCreateInput):RegionPercentage
+    updateRegionPercentage(where:RegionPercentageWhereUniqueInput!, data:RegionPercentageUpdateInput ):RegionPercentage  
+    upsertRegionPercentage(where:RegionPercentageWhereUniqueInput!, data:RegionPercentageCreateInput ):RegionPercentage    
+    deleteRegionPercentage(where: RegionPercentageWhereUniqueInput!):RegionPercentage
+  ,
+    # Country
+    createCountry(data:CountryCreateInput):Country
+    updateCountry(where:CountryWhereUniqueInput!, data:CountryUpdateInput ):Country  
+    upsertCountry(where:CountryWhereUniqueInput!, data:CountryCreateInput ):Country    
+    deleteCountry(where: CountryWhereUniqueInput!):Country
+  ,
+    # State
+    createState(data:StateCreateInput):State
+    updateState(where:StateWhereUniqueInput!, data:StateUpdateInput ):State  
+    upsertState(where:StateWhereUniqueInput!, data:StateCreateInput ):State    
+    deleteState(where: StateWhereUniqueInput!):State
+  ,
+    # City
+    createCity(data:CityCreateInput):City
+    updateCity(where:CityWhereUniqueInput!, data:CityUpdateInput ):City  
+    upsertCity(where:CityWhereUniqueInput!, data:CityCreateInput ):City    
+    deleteCity(where: CityWhereUniqueInput!):City
+  ,
+    # User
+    createUser(data:UserCreateInput):User
+    updateUser(where:UserWhereUniqueInput!, data:UserUpdateInput ):User  
+    upsertUser(where:UserWhereUniqueInput!, data:UserCreateInput ):User    
+    deleteUser(where: UserWhereUniqueInput!):User
+  ,
+    # Company
+    createCompany(data:CompanyCreateInput):Company
+    updateCompany(where:CompanyWhereUniqueInput!, data:CompanyUpdateInput ):Company  
+    upsertCompany(where:CompanyWhereUniqueInput!, data:CompanyCreateInput ):Company    
+    deleteCompany(where: CompanyWhereUniqueInput!):Company
+  ,
+    # Profile
+    createProfile(data:ProfileCreateInput):Profile
+    updateProfile(where:ProfileWhereUniqueInput!, data:ProfileUpdateInput ):Profile  
+    upsertProfile(where:ProfileWhereUniqueInput!, data:ProfileCreateInput ):Profile    
+    deleteProfile(where: ProfileWhereUniqueInput!):Profile
+  ,
+    # Project
+    createProject(data:ProjectCreateInput):Project
+    updateProject(where:ProjectWhereUniqueInput!, data:ProjectUpdateInput ):Project  
+    upsertProject(where:ProjectWhereUniqueInput!, data:ProjectCreateInput ):Project    
+    deleteProject(where: ProjectWhereUniqueInput!):Project
+  ,
+    # Condition
+    createCondition(data:ConditionCreateInput):Condition
+    updateCondition(where:ConditionWhereUniqueInput!, data:ConditionUpdateInput ):Condition  
+    upsertCondition(where:ConditionWhereUniqueInput!, data:ConditionCreateInput ):Condition    
+    deleteCondition(where: ConditionWhereUniqueInput!):Condition
+  ,
+    # DiseaseTargetMarket
+    createDiseaseTargetMarket(data:DiseaseTargetMarketCreateInput):DiseaseTargetMarket
+    updateDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketUpdateInput ):DiseaseTargetMarket  
+    upsertDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketCreateInput ):DiseaseTargetMarket    
+    deleteDiseaseTargetMarket(where: DiseaseTargetMarketWhereUniqueInput!):DiseaseTargetMarket
+  ,
+    # StudyType
+    createStudyType(data:StudyTypeCreateInput):StudyType
+    updateStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeUpdateInput ):StudyType  
+    upsertStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeCreateInput ):StudyType    
+    deleteStudyType(where: StudyTypeWhereUniqueInput!):StudyType
+  ,
+    # StudyDesign
+    createStudyDesign(data:StudyDesignCreateInput):StudyDesign
+    updateStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignUpdateInput ):StudyDesign  
+    upsertStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignCreateInput ):StudyDesign    
+    deleteStudyDesign(where: StudyDesignWhereUniqueInput!):StudyDesign
+  ,
+    # Service
+    createService(data:ServiceCreateInput):Service
+    updateService(where:ServiceWhereUniqueInput!, data:ServiceUpdateInput ):Service  
+    upsertService(where:ServiceWhereUniqueInput!, data:ServiceCreateInput ):Service    
+    deleteService(where: ServiceWhereUniqueInput!):Service
+  ,
+    # ProjectNews
+    createProjectNews(data:ProjectNewsCreateInput):ProjectNews
+    updateProjectNews(where:ProjectNewsWhereUniqueInput!, data:ProjectNewsUpdateInput ):ProjectNews  
+    upsertProjectNews(where:ProjectNewsWhereUniqueInput!, data:ProjectNewsCreateInput ):ProjectNews    
+    deleteProjectNews(where: ProjectNewsWhereUniqueInput!):ProjectNews
+  ,
+    # TeamMembers
+    createTeamMembers(data:TeamMembersCreateInput):TeamMembers
+    updateTeamMembers(where:TeamMembersWhereUniqueInput!, data:TeamMembersUpdateInput ):TeamMembers  
+    upsertTeamMembers(where:TeamMembersWhereUniqueInput!, data:TeamMembersCreateInput ):TeamMembers    
+    deleteTeamMembers(where: TeamMembersWhereUniqueInput!):TeamMembers
+  ,
+    # RRActivity
+    createRRActivity(data:RRActivityCreateInput):RRActivity
+    updateRRActivity(where:RRActivityWhereUniqueInput!, data:RRActivityUpdateInput ):RRActivity  
+    upsertRRActivity(where:RRActivityWhereUniqueInput!, data:RRActivityCreateInput ):RRActivity    
+    deleteRRActivity(where: RRActivityWhereUniqueInput!):RRActivity
+  ,
+    # StudyRole
+    createStudyRole(data:StudyRoleCreateInput):StudyRole
+    updateStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleUpdateInput ):StudyRole  
+    upsertStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleCreateInput ):StudyRole    
+    deleteStudyRole(where: StudyRoleWhereUniqueInput!):StudyRole
+  ,
+    # MatrixStudyDocuments
+    createMatrixStudyDocuments(data:MatrixStudyDocumentsCreateInput):MatrixStudyDocuments
+    updateMatrixStudyDocuments(where:MatrixStudyDocumentsWhereUniqueInput!, data:MatrixStudyDocumentsUpdateInput ):MatrixStudyDocuments  
+    upsertMatrixStudyDocuments(where:MatrixStudyDocumentsWhereUniqueInput!, data:MatrixStudyDocumentsCreateInput ):MatrixStudyDocuments    
+    deleteMatrixStudyDocuments(where: MatrixStudyDocumentsWhereUniqueInput!):MatrixStudyDocuments
+  ,
+    # Notification
+    createNotification(data:NotificationCreateInput):Notification
+    updateNotification(where:NotificationWhereUniqueInput!, data:NotificationUpdateInput ):Notification  
+    upsertNotification(where:NotificationWhereUniqueInput!, data:NotificationCreateInput ):Notification    
+    deleteNotification(where: NotificationWhereUniqueInput!):Notification
+  ,
+    # Document
+    createDocument(data:DocumentCreateInput):Document
+    updateDocument(where:DocumentWhereUniqueInput!, data:DocumentUpdateInput ):Document  
+    upsertDocument(where:DocumentWhereUniqueInput!, data:DocumentCreateInput ):Document    
+    deleteDocument(where: DocumentWhereUniqueInput!):Document
+  ,
+    # DocumentFile
+    createDocumentFile(data:DocumentFileCreateInput):DocumentFile
+    updateDocumentFile(where:DocumentFileWhereUniqueInput!, data:DocumentFileUpdateInput ):DocumentFile  
+    upsertDocumentFile(where:DocumentFileWhereUniqueInput!, data:DocumentFileCreateInput ):DocumentFile    
+    deleteDocumentFile(where: DocumentFileWhereUniqueInput!):DocumentFile
+  ,
+    # VerificationRequest
+    createVerificationRequest(data:VerificationRequestCreateInput):VerificationRequest
+    updateVerificationRequest(where:VerificationRequestWhereUniqueInput!, data:VerificationRequestUpdateInput ):VerificationRequest  
+    upsertVerificationRequest(where:VerificationRequestWhereUniqueInput!, data:VerificationRequestCreateInput ):VerificationRequest    
+    deleteVerificationRequest(where: VerificationRequestWhereUniqueInput!):VerificationRequest
+  ,
+    # VisitReportTracker
+    createVisitReportTracker(data:VisitReportTrackerCreateInput):VisitReportTracker
+    updateVisitReportTracker(where:VisitReportTrackerWhereUniqueInput!, data:VisitReportTrackerUpdateInput ):VisitReportTracker  
+    upsertVisitReportTracker(where:VisitReportTrackerWhereUniqueInput!, data:VisitReportTrackerCreateInput ):VisitReportTracker    
+    deleteVisitReportTracker(where: VisitReportTrackerWhereUniqueInput!):VisitReportTracker
+  ,
+    # TMFsTracker
+    createTMFsTracker(data:TMFsTrackerCreateInput):TMFsTracker
+    updateTMFsTracker(where:TMFsTrackerWhereUniqueInput!, data:TMFsTrackerUpdateInput ):TMFsTracker  
+    upsertTMFsTracker(where:TMFsTrackerWhereUniqueInput!, data:TMFsTrackerCreateInput ):TMFsTracker    
+    deleteTMFsTracker(where: TMFsTrackerWhereUniqueInput!):TMFsTracker
+  ,
+    # SiteRegulatoryBinder
+    createSiteRegulatoryBinder(data:SiteRegulatoryBinderCreateInput):SiteRegulatoryBinder
+    updateSiteRegulatoryBinder(where:SiteRegulatoryBinderWhereUniqueInput!, data:SiteRegulatoryBinderUpdateInput ):SiteRegulatoryBinder  
+    upsertSiteRegulatoryBinder(where:SiteRegulatoryBinderWhereUniqueInput!, data:SiteRegulatoryBinderCreateInput ):SiteRegulatoryBinder    
+    deleteSiteRegulatoryBinder(where: SiteRegulatoryBinderWhereUniqueInput!):SiteRegulatoryBinder
+  ,
+    # MeetingMinutes
+    createMeetingMinutes(data:MeetingMinutesCreateInput):MeetingMinutes
+    updateMeetingMinutes(where:MeetingMinutesWhereUniqueInput!, data:MeetingMinutesUpdateInput ):MeetingMinutes  
+    upsertMeetingMinutes(where:MeetingMinutesWhereUniqueInput!, data:MeetingMinutesCreateInput ):MeetingMinutes    
+    deleteMeetingMinutes(where: MeetingMinutesWhereUniqueInput!):MeetingMinutes
+  ,
+    # Department
+    createDepartment(data:DepartmentCreateInput):Department
+    updateDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentUpdateInput ):Department  
+    upsertDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentCreateInput ):Department    
+    deleteDepartment(where: DepartmentWhereUniqueInput!):Department
+  ,
+    # ClassCostCenter
+    createClassCostCenter(data:ClassCostCenterCreateInput):ClassCostCenter
+    updateClassCostCenter(where:ClassCostCenterWhereUniqueInput!, data:ClassCostCenterUpdateInput ):ClassCostCenter  
+    upsertClassCostCenter(where:ClassCostCenterWhereUniqueInput!, data:ClassCostCenterCreateInput ):ClassCostCenter    
+    deleteClassCostCenter(where: ClassCostCenterWhereUniqueInput!):ClassCostCenter
+  
+  }
+
+
+  type Query{
+    
+    # Account
+    accounts:[Account]
+    account(id:String!):Account
+,
+    # Page
+    pages:[Page]
+    page(id:String!):Page
+,
+    # Role
+    roles:[Role]
+    role(id:String!):Role
+,
+    # Session
+    sessions:[Session]
+    session(id:String!):Session
+,
+    # Region
+    regions:[Region]
+    region(id:String!):Region
+,
+    # RegionPercentage
+    regionPercentages:[RegionPercentage]
+    regionPercentage(id:String!):RegionPercentage
+,
+    # Country
+    countrys:[Country]
+    country(id:String!):Country
+,
+    # State
+    states:[State]
+    state(id:String!):State
+,
+    # City
+    citys:[City]
+    city(id:String!):City
+,
+    # User
+    users:[User]
+    user(id:String!):User
+,
+    # Company
+    companys:[Company]
+    company(id:String!):Company
+,
+    # Profile
+    profiles:[Profile]
+    profile(id:String!):Profile
+,
+    # Project
+    projects:[Project]
+    project(id:String!):Project
+,
+    # Condition
+    conditions:[Condition]
+    condition(id:String!):Condition
+,
+    # DiseaseTargetMarket
+    diseaseTargetMarkets:[DiseaseTargetMarket]
+    diseaseTargetMarket(id:String!):DiseaseTargetMarket
+,
+    # StudyType
+    studyTypes:[StudyType]
+    studyType(id:String!):StudyType
+,
+    # StudyDesign
+    studyDesigns:[StudyDesign]
+    studyDesign(id:String!):StudyDesign
+,
+    # Service
+    services:[Service]
+    service(id:String!):Service
+,
+    # ProjectNews
+    projectNewss:[ProjectNews]
+    projectNews(id:String!):ProjectNews
+,
+    # TeamMembers
+    teamMemberss:[TeamMembers]
+    teamMembers(id:String!):TeamMembers
+,
+    # RRActivity
+    rRActivitys:[RRActivity]
+    rRActivity(id:String!):RRActivity
+,
+    # StudyRole
+    studyRoles:[StudyRole]
+    studyRole(id:String!):StudyRole
+,
+    # MatrixStudyDocuments
+    matrixStudyDocumentss:[MatrixStudyDocuments]
+    matrixStudyDocuments(id:String!):MatrixStudyDocuments
+,
+    # Notification
+    notifications:[Notification]
+    notification(id:String!):Notification
+,
+    # Document
+    documents:[Document]
+    document(id:String!):Document
+,
+    # DocumentFile
+    documentFiles:[DocumentFile]
+    documentFile(id:String!):DocumentFile
+,
+    # VerificationRequest
+    verificationRequests:[VerificationRequest]
+    verificationRequest(id:String!):VerificationRequest
+,
+    # VisitReportTracker
+    visitReportTrackers:[VisitReportTracker]
+    visitReportTracker(id:String!):VisitReportTracker
+,
+    # TMFsTracker
+    tMFsTrackers:[TMFsTracker]
+    tMFsTracker(id:String!):TMFsTracker
+,
+    # SiteRegulatoryBinder
+    siteRegulatoryBinders:[SiteRegulatoryBinder]
+    siteRegulatoryBinder(id:String!):SiteRegulatoryBinder
+,
+    # MeetingMinutes
+    meetingMinutess:[MeetingMinutes]
+    meetingMinutes(id:String!):MeetingMinutes
+,
+    # Department
+    departments:[Department]
+    department(id:String!):Department
+,
+    # ClassCostCenter
+    classCostCenters:[ClassCostCenter]
+    classCostCenter(id:String!):ClassCostCenter
+
+  }
+  
+`;
+
+export default typeDefs;

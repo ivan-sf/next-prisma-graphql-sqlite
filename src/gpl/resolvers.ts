@@ -1,15 +1,15 @@
-import { roleDataLoader } from "../api/role/dataLoaders";
-import { RoleResolvers } from "../api/role/resolvers";
+import { companyDataLoader } from "../api/company/dataLoaders";
+import { CompanyResolvers } from "../api/company/resolvers";
 
 const resolvers = {
   Query: {
-    ...RoleResolvers.Query,
+    ...CompanyResolvers.Query,
   },
   Mutation: {
-    ...RoleResolvers.Mutation,
+    ...CompanyResolvers.Mutation,
   },
   Role: {
-    ...roleDataLoader
+    ...companyDataLoader
   }
 };
 
