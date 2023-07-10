@@ -580,18 +580,18 @@ enum Enum_RoleName {
   
 
   type Mutation {
-    # Company
-    createCompany(data:CompanyCreateInput):Company
-    updateCompany(where:CompanyWhereUniqueInput!, data:CompanyUpdateInput ):Company  
-    upsertCompany(where:CompanyWhereUniqueInput!, data:CompanyCreateInput ):Company    
-    deleteCompany(where: CompanyWhereUniqueInput!):Company
+    # Condition
+    createCondition(data:ConditionCreateInput):Condition
+    updateCondition(where:ConditionWhereUniqueInput!, data:ConditionUpdateInput ):Condition  
+    upsertCondition(where:ConditionWhereUniqueInput!, data:ConditionCreateInput ):Condition    
+    deleteCondition(where: ConditionWhereUniqueInput!):Condition
   }
 
 
   type Query{
-    # Company
-    companys:[Company]
-    company(id:String!):Company
+    ## Condition
+    conditions:[Condition]
+    condition(id:String!):Condition
   }
   
 `;
