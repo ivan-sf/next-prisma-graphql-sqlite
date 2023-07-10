@@ -1,15 +1,15 @@
-import { companyDataLoader } from "../api/company/dataLoaders";
-import { CompanyResolvers } from "../api/company/resolvers";
+import { conditionDataLoader } from "../api/condition/dataLoaders";
+import { ConditionResolvers } from "../api/condition/resolvers";
 
 const resolvers = {
   Query: {
-    ...CompanyResolvers.Query,
+    ...ConditionResolvers.Query,
   },
   Mutation: {
-    ...CompanyResolvers.Mutation,
+    ...ConditionResolvers.Mutation,
   },
-  Role: {
-    ...companyDataLoader
+  Condition: {
+    ...conditionDataLoader
   }
 };
 
