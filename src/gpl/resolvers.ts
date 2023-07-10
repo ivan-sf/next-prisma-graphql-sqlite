@@ -8,7 +8,7 @@ const resolvers = {
   Mutation: {
     ...CompanyResolvers.Mutation,
   },
-  Role: {
+  Company: {
     ...companyDataLoader
   }
 };
