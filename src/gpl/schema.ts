@@ -584,14 +584,24 @@ enum Enum_RoleName {
     createCondition(data:ConditionCreateInput):Condition
     updateCondition(where:ConditionWhereUniqueInput!, data:ConditionUpdateInput ):Condition  
     upsertCondition(where:ConditionWhereUniqueInput!, data:ConditionCreateInput ):Condition    
-    deleteCondition(where: ConditionWhereUniqueInput!):Condition
+    deleteCondition(where: ConditionWhereUniqueInput!):Condition,
+    
+    # DiseaseTargetMarket
+    createDiseaseTargetMarket(data:DiseaseTargetMarketCreateInput):DiseaseTargetMarket
+    updateDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketUpdateInput ):DiseaseTargetMarket  
+    upsertDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketCreateInput ):DiseaseTargetMarket    
+    deleteDiseaseTargetMarket(where: DiseaseTargetMarketWhereUniqueInput!):DiseaseTargetMarket,
   }
 
 
   type Query{
     ## Condition
     conditions:[Condition]
-    condition(id:String!):Condition
+    condition(id:String!):Condition,
+
+    # DiseaseTargetMarket
+    diseaseTargetMarkets:[DiseaseTargetMarket]
+    diseaseTargetMarket(id:String!):DiseaseTargetMarket,
   }
   
 `;
