@@ -1,28 +1,16 @@
-import { areasResolver } from '../api/area/resolvers';
-import { companiesResolver } from '../api/companies/resolver';
-import { usersResolver } from '../api/users/resolver';
+import { roleDataLoader } from "../api/role/dataLoaders";
+import { RoleResolvers } from "../api/role/resolvers";
 
 const resolvers = {
   Query: {
-    ...companiesResolver.queries,
-    ...usersResolver.queries,
-    ...areasResolver.queries,
+    ...RoleResolvers.Query,
   },
   Mutation: {
-    ...companiesResolver.mutations,
-    ...usersResolver.mutations,
-    ...areasResolver.mutations,
+    ...RoleResolvers.Mutation,
   },
-  Company: {
-    users: companiesResolver.users,
-  },
-  User: {
-    company: usersResolver.company,
-    area: usersResolver.area,
-  },
-  // Area: {
-  //   user: areasResolver.user,
-  // }
+  Role: {
+    ...roleDataLoader
+  }
 };
 
 export default resolvers;

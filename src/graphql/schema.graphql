@@ -1,6 +1,4 @@
-import { gql } from 'apollo-server';
-
-const typeDefs = gql`
+  
   
 enum Enum_Priority {
   VeryImportant
@@ -580,20 +578,341 @@ enum Enum_RoleName {
   
 
   type Mutation {
+    
+    # Account
+    createAccount(data:AccountCreateInput):Account
+    updateAccount(where:AccountWhereUniqueInput!, data:AccountUpdateInput ):Account  
+    upsertAccount(where:AccountWhereUniqueInput!, data:AccountCreateInput ):Account    
+    deleteAccount(where: AccountWhereUniqueInput!):Account
+  ,
+    # Page
+    createPage(data:PageCreateInput):Page
+    updatePage(where:PageWhereUniqueInput!, data:PageUpdateInput ):Page  
+    upsertPage(where:PageWhereUniqueInput!, data:PageCreateInput ):Page    
+    deletePage(where: PageWhereUniqueInput!):Page
+  ,
     # Role
     createRole(data:RoleCreateInput):Role
     updateRole(where:RoleWhereUniqueInput!, data:RoleUpdateInput ):Role  
     upsertRole(where:RoleWhereUniqueInput!, data:RoleCreateInput ):Role    
     deleteRole(where: RoleWhereUniqueInput!):Role
+  ,
+    # Session
+    createSession(data:SessionCreateInput):Session
+    updateSession(where:SessionWhereUniqueInput!, data:SessionUpdateInput ):Session  
+    upsertSession(where:SessionWhereUniqueInput!, data:SessionCreateInput ):Session    
+    deleteSession(where: SessionWhereUniqueInput!):Session
+  ,
+    # Region
+    createRegion(data:RegionCreateInput):Region
+    updateRegion(where:RegionWhereUniqueInput!, data:RegionUpdateInput ):Region  
+    upsertRegion(where:RegionWhereUniqueInput!, data:RegionCreateInput ):Region    
+    deleteRegion(where: RegionWhereUniqueInput!):Region
+  ,
+    # RegionPercentage
+    createRegionPercentage(data:RegionPercentageCreateInput):RegionPercentage
+    updateRegionPercentage(where:RegionPercentageWhereUniqueInput!, data:RegionPercentageUpdateInput ):RegionPercentage  
+    upsertRegionPercentage(where:RegionPercentageWhereUniqueInput!, data:RegionPercentageCreateInput ):RegionPercentage    
+    deleteRegionPercentage(where: RegionPercentageWhereUniqueInput!):RegionPercentage
+  ,
+    # Country
+    createCountry(data:CountryCreateInput):Country
+    updateCountry(where:CountryWhereUniqueInput!, data:CountryUpdateInput ):Country  
+    upsertCountry(where:CountryWhereUniqueInput!, data:CountryCreateInput ):Country    
+    deleteCountry(where: CountryWhereUniqueInput!):Country
+  ,
+    # State
+    createState(data:StateCreateInput):State
+    updateState(where:StateWhereUniqueInput!, data:StateUpdateInput ):State  
+    upsertState(where:StateWhereUniqueInput!, data:StateCreateInput ):State    
+    deleteState(where: StateWhereUniqueInput!):State
+  ,
+    # City
+    createCity(data:CityCreateInput):City
+    updateCity(where:CityWhereUniqueInput!, data:CityUpdateInput ):City  
+    upsertCity(where:CityWhereUniqueInput!, data:CityCreateInput ):City    
+    deleteCity(where: CityWhereUniqueInput!):City
+  ,
+    # User
+    createUser(data:UserCreateInput):User
+    updateUser(where:UserWhereUniqueInput!, data:UserUpdateInput ):User  
+    upsertUser(where:UserWhereUniqueInput!, data:UserCreateInput ):User    
+    deleteUser(where: UserWhereUniqueInput!):User
+  ,
+    # Company
+    createCompany(data:CompanyCreateInput):Company
+    updateCompany(where:CompanyWhereUniqueInput!, data:CompanyUpdateInput ):Company  
+    upsertCompany(where:CompanyWhereUniqueInput!, data:CompanyCreateInput ):Company    
+    deleteCompany(where: CompanyWhereUniqueInput!):Company
+  ,
+    # Profile
+    createProfile(data:ProfileCreateInput):Profile
+    updateProfile(where:ProfileWhereUniqueInput!, data:ProfileUpdateInput ):Profile  
+    upsertProfile(where:ProfileWhereUniqueInput!, data:ProfileCreateInput ):Profile    
+    deleteProfile(where: ProfileWhereUniqueInput!):Profile
+  ,
+    # Project
+    createProject(data:ProjectCreateInput):Project
+    updateProject(where:ProjectWhereUniqueInput!, data:ProjectUpdateInput ):Project  
+    upsertProject(where:ProjectWhereUniqueInput!, data:ProjectCreateInput ):Project    
+    deleteProject(where: ProjectWhereUniqueInput!):Project
+  ,
+    # Condition
+    createCondition(data:ConditionCreateInput):Condition
+    updateCondition(where:ConditionWhereUniqueInput!, data:ConditionUpdateInput ):Condition  
+    upsertCondition(where:ConditionWhereUniqueInput!, data:ConditionCreateInput ):Condition    
+    deleteCondition(where: ConditionWhereUniqueInput!):Condition
+  ,
+    # DiseaseTargetMarket
+    createDiseaseTargetMarket(data:DiseaseTargetMarketCreateInput):DiseaseTargetMarket
+    updateDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketUpdateInput ):DiseaseTargetMarket  
+    upsertDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketCreateInput ):DiseaseTargetMarket    
+    deleteDiseaseTargetMarket(where: DiseaseTargetMarketWhereUniqueInput!):DiseaseTargetMarket
+  ,
+    # StudyType
+    createStudyType(data:StudyTypeCreateInput):StudyType
+    updateStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeUpdateInput ):StudyType  
+    upsertStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeCreateInput ):StudyType    
+    deleteStudyType(where: StudyTypeWhereUniqueInput!):StudyType
+  ,
+    # StudyDesign
+    createStudyDesign(data:StudyDesignCreateInput):StudyDesign
+    updateStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignUpdateInput ):StudyDesign  
+    upsertStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignCreateInput ):StudyDesign    
+    deleteStudyDesign(where: StudyDesignWhereUniqueInput!):StudyDesign
+  ,
+    # Service
+    createService(data:ServiceCreateInput):Service
+    updateService(where:ServiceWhereUniqueInput!, data:ServiceUpdateInput ):Service  
+    upsertService(where:ServiceWhereUniqueInput!, data:ServiceCreateInput ):Service    
+    deleteService(where: ServiceWhereUniqueInput!):Service
+  ,
+    # ProjectNews
+    createProjectNews(data:ProjectNewsCreateInput):ProjectNews
+    updateProjectNews(where:ProjectNewsWhereUniqueInput!, data:ProjectNewsUpdateInput ):ProjectNews  
+    upsertProjectNews(where:ProjectNewsWhereUniqueInput!, data:ProjectNewsCreateInput ):ProjectNews    
+    deleteProjectNews(where: ProjectNewsWhereUniqueInput!):ProjectNews
+  ,
+    # TeamMembers
+    createTeamMembers(data:TeamMembersCreateInput):TeamMembers
+    updateTeamMembers(where:TeamMembersWhereUniqueInput!, data:TeamMembersUpdateInput ):TeamMembers  
+    upsertTeamMembers(where:TeamMembersWhereUniqueInput!, data:TeamMembersCreateInput ):TeamMembers    
+    deleteTeamMembers(where: TeamMembersWhereUniqueInput!):TeamMembers
+  ,
+    # RRActivity
+    createRRActivity(data:RRActivityCreateInput):RRActivity
+    updateRRActivity(where:RRActivityWhereUniqueInput!, data:RRActivityUpdateInput ):RRActivity  
+    upsertRRActivity(where:RRActivityWhereUniqueInput!, data:RRActivityCreateInput ):RRActivity    
+    deleteRRActivity(where: RRActivityWhereUniqueInput!):RRActivity
+  ,
+    # StudyRole
+    createStudyRole(data:StudyRoleCreateInput):StudyRole
+    updateStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleUpdateInput ):StudyRole  
+    upsertStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleCreateInput ):StudyRole    
+    deleteStudyRole(where: StudyRoleWhereUniqueInput!):StudyRole
+  ,
+    # MatrixStudyDocuments
+    createMatrixStudyDocuments(data:MatrixStudyDocumentsCreateInput):MatrixStudyDocuments
+    updateMatrixStudyDocuments(where:MatrixStudyDocumentsWhereUniqueInput!, data:MatrixStudyDocumentsUpdateInput ):MatrixStudyDocuments  
+    upsertMatrixStudyDocuments(where:MatrixStudyDocumentsWhereUniqueInput!, data:MatrixStudyDocumentsCreateInput ):MatrixStudyDocuments    
+    deleteMatrixStudyDocuments(where: MatrixStudyDocumentsWhereUniqueInput!):MatrixStudyDocuments
+  ,
+    # Notification
+    createNotification(data:NotificationCreateInput):Notification
+    updateNotification(where:NotificationWhereUniqueInput!, data:NotificationUpdateInput ):Notification  
+    upsertNotification(where:NotificationWhereUniqueInput!, data:NotificationCreateInput ):Notification    
+    deleteNotification(where: NotificationWhereUniqueInput!):Notification
+  ,
+    # Document
+    createDocument(data:DocumentCreateInput):Document
+    updateDocument(where:DocumentWhereUniqueInput!, data:DocumentUpdateInput ):Document  
+    upsertDocument(where:DocumentWhereUniqueInput!, data:DocumentCreateInput ):Document    
+    deleteDocument(where: DocumentWhereUniqueInput!):Document
+  ,
+    # DocumentFile
+    createDocumentFile(data:DocumentFileCreateInput):DocumentFile
+    updateDocumentFile(where:DocumentFileWhereUniqueInput!, data:DocumentFileUpdateInput ):DocumentFile  
+    upsertDocumentFile(where:DocumentFileWhereUniqueInput!, data:DocumentFileCreateInput ):DocumentFile    
+    deleteDocumentFile(where: DocumentFileWhereUniqueInput!):DocumentFile
+  ,
+    # VerificationRequest
+    createVerificationRequest(data:VerificationRequestCreateInput):VerificationRequest
+    updateVerificationRequest(where:VerificationRequestWhereUniqueInput!, data:VerificationRequestUpdateInput ):VerificationRequest  
+    upsertVerificationRequest(where:VerificationRequestWhereUniqueInput!, data:VerificationRequestCreateInput ):VerificationRequest    
+    deleteVerificationRequest(where: VerificationRequestWhereUniqueInput!):VerificationRequest
+  ,
+    # VisitReportTracker
+    createVisitReportTracker(data:VisitReportTrackerCreateInput):VisitReportTracker
+    updateVisitReportTracker(where:VisitReportTrackerWhereUniqueInput!, data:VisitReportTrackerUpdateInput ):VisitReportTracker  
+    upsertVisitReportTracker(where:VisitReportTrackerWhereUniqueInput!, data:VisitReportTrackerCreateInput ):VisitReportTracker    
+    deleteVisitReportTracker(where: VisitReportTrackerWhereUniqueInput!):VisitReportTracker
+  ,
+    # TMFsTracker
+    createTMFsTracker(data:TMFsTrackerCreateInput):TMFsTracker
+    updateTMFsTracker(where:TMFsTrackerWhereUniqueInput!, data:TMFsTrackerUpdateInput ):TMFsTracker  
+    upsertTMFsTracker(where:TMFsTrackerWhereUniqueInput!, data:TMFsTrackerCreateInput ):TMFsTracker    
+    deleteTMFsTracker(where: TMFsTrackerWhereUniqueInput!):TMFsTracker
+  ,
+    # SiteRegulatoryBinder
+    createSiteRegulatoryBinder(data:SiteRegulatoryBinderCreateInput):SiteRegulatoryBinder
+    updateSiteRegulatoryBinder(where:SiteRegulatoryBinderWhereUniqueInput!, data:SiteRegulatoryBinderUpdateInput ):SiteRegulatoryBinder  
+    upsertSiteRegulatoryBinder(where:SiteRegulatoryBinderWhereUniqueInput!, data:SiteRegulatoryBinderCreateInput ):SiteRegulatoryBinder    
+    deleteSiteRegulatoryBinder(where: SiteRegulatoryBinderWhereUniqueInput!):SiteRegulatoryBinder
+  ,
+    # MeetingMinutes
+    createMeetingMinutes(data:MeetingMinutesCreateInput):MeetingMinutes
+    updateMeetingMinutes(where:MeetingMinutesWhereUniqueInput!, data:MeetingMinutesUpdateInput ):MeetingMinutes  
+    upsertMeetingMinutes(where:MeetingMinutesWhereUniqueInput!, data:MeetingMinutesCreateInput ):MeetingMinutes    
+    deleteMeetingMinutes(where: MeetingMinutesWhereUniqueInput!):MeetingMinutes
+  ,
+    # Department
+    createDepartment(data:DepartmentCreateInput):Department
+    updateDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentUpdateInput ):Department  
+    upsertDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentCreateInput ):Department    
+    deleteDepartment(where: DepartmentWhereUniqueInput!):Department
+  ,
+    # ClassCostCenter
+    createClassCostCenter(data:ClassCostCenterCreateInput):ClassCostCenter
+    updateClassCostCenter(where:ClassCostCenterWhereUniqueInput!, data:ClassCostCenterUpdateInput ):ClassCostCenter  
+    upsertClassCostCenter(where:ClassCostCenterWhereUniqueInput!, data:ClassCostCenterCreateInput ):ClassCostCenter    
+    deleteClassCostCenter(where: ClassCostCenterWhereUniqueInput!):ClassCostCenter
+  
   }
 
 
   type Query{
+    
+    # Account
+    accounts:[Account]
+    account(id:String!):Account
+,
+    # Page
+    pages:[Page]
+    page(id:String!):Page
+,
     # Role
     roles:[Role]
     role(id:String!):Role
+,
+    # Session
+    sessions:[Session]
+    session(id:String!):Session
+,
+    # Region
+    regions:[Region]
+    region(id:String!):Region
+,
+    # RegionPercentage
+    regionPercentages:[RegionPercentage]
+    regionPercentage(id:String!):RegionPercentage
+,
+    # Country
+    countrys:[Country]
+    country(id:String!):Country
+,
+    # State
+    states:[State]
+    state(id:String!):State
+,
+    # City
+    citys:[City]
+    city(id:String!):City
+,
+    # User
+    users:[User]
+    user(id:String!):User
+,
+    # Company
+    companys:[Company]
+    company(id:String!):Company
+,
+    # Profile
+    profiles:[Profile]
+    profile(id:String!):Profile
+,
+    # Project
+    projects:[Project]
+    project(id:String!):Project
+,
+    # Condition
+    conditions:[Condition]
+    condition(id:String!):Condition
+,
+    # DiseaseTargetMarket
+    diseaseTargetMarkets:[DiseaseTargetMarket]
+    diseaseTargetMarket(id:String!):DiseaseTargetMarket
+,
+    # StudyType
+    studyTypes:[StudyType]
+    studyType(id:String!):StudyType
+,
+    # StudyDesign
+    studyDesigns:[StudyDesign]
+    studyDesign(id:String!):StudyDesign
+,
+    # Service
+    services:[Service]
+    service(id:String!):Service
+,
+    # ProjectNews
+    projectNewss:[ProjectNews]
+    projectNews(id:String!):ProjectNews
+,
+    # TeamMembers
+    teamMemberss:[TeamMembers]
+    teamMembers(id:String!):TeamMembers
+,
+    # RRActivity
+    rRActivitys:[RRActivity]
+    rRActivity(id:String!):RRActivity
+,
+    # StudyRole
+    studyRoles:[StudyRole]
+    studyRole(id:String!):StudyRole
+,
+    # MatrixStudyDocuments
+    matrixStudyDocumentss:[MatrixStudyDocuments]
+    matrixStudyDocuments(id:String!):MatrixStudyDocuments
+,
+    # Notification
+    notifications:[Notification]
+    notification(id:String!):Notification
+,
+    # Document
+    documents:[Document]
+    document(id:String!):Document
+,
+    # DocumentFile
+    documentFiles:[DocumentFile]
+    documentFile(id:String!):DocumentFile
+,
+    # VerificationRequest
+    verificationRequests:[VerificationRequest]
+    verificationRequest(id:String!):VerificationRequest
+,
+    # VisitReportTracker
+    visitReportTrackers:[VisitReportTracker]
+    visitReportTracker(id:String!):VisitReportTracker
+,
+    # TMFsTracker
+    tMFsTrackers:[TMFsTracker]
+    tMFsTracker(id:String!):TMFsTracker
+,
+    # SiteRegulatoryBinder
+    siteRegulatoryBinders:[SiteRegulatoryBinder]
+    siteRegulatoryBinder(id:String!):SiteRegulatoryBinder
+,
+    # MeetingMinutes
+    meetingMinutess:[MeetingMinutes]
+    meetingMinutes(id:String!):MeetingMinutes
+,
+    # Department
+    departments:[Department]
+    department(id:String!):Department
+,
+    # ClassCostCenter
+    classCostCenters:[ClassCostCenter]
+    classCostCenter(id:String!):ClassCostCenter
+
   }
   
-`;
-
-export default typeDefs;
