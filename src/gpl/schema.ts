@@ -609,6 +609,18 @@ enum Enum_RoleName {
     updateStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleUpdateInput ):StudyRole  
     upsertStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleCreateInput ):StudyRole    
     deleteStudyRole(where: StudyRoleWhereUniqueInput!):StudyRole,
+
+    # Service
+    createService(data:ServiceCreateInput):Service
+    updateService(where:ServiceWhereUniqueInput!, data:ServiceUpdateInput ):Service  
+    upsertService(where:ServiceWhereUniqueInput!, data:ServiceCreateInput ):Service    
+    deleteService(where: ServiceWhereUniqueInput!):Service,
+
+    # Department
+    createDepartment(data:DepartmentCreateInput):Department
+    updateDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentUpdateInput ):Department  
+    upsertDepartment(where:DepartmentWhereUniqueInput!, data:DepartmentCreateInput ):Department    
+    deleteDepartment(where: DepartmentWhereUniqueInput!):Department
   }
 
 
@@ -632,6 +644,14 @@ enum Enum_RoleName {
     # StudyRole
     studyRoles:[StudyRole]
     studyRole(id:String!):StudyRole,
+
+    # Service
+    services:[Service]
+    service(id:String!):Service,
+
+    # Department
+    departments:[Department]
+    department(id:String!):Department
   }
   
 `;

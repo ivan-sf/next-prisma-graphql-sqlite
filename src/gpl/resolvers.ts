@@ -8,6 +8,10 @@ import { StudyTypeResolvers } from '../api/studytype/resolvers';
 import { studyDesignDataLoader } from '../api/studydesign/dataLoaders';
 import { studyRoleDataLoader } from '../api/studyrole/dataLoaders';
 import { studyTypeDataLoader } from '../api/studytype/dataLoaders';
+import { DepartmentResolvers } from '../api/department/resolvers';
+import { departmentDataLoader } from '../api/department/dataLoaders';
+import { ServiceResolvers } from '../api/service/resolvers';
+import { serviceDataLoader } from '../api/service/dataLoaders';
 
 const resolvers = {
   Query: {
@@ -16,6 +20,8 @@ const resolvers = {
     ...StudyDesignResolvers.Query,
     ...StudyRoleResolvers.Query,
     ...StudyTypeResolvers.Query,
+    ...DepartmentResolvers.Query,
+    ...ServiceResolvers.Query,
   },
   Mutation: {
     ...ConditionResolvers.Mutation,
@@ -23,6 +29,8 @@ const resolvers = {
     ...StudyDesignResolvers.Mutation,
     ...StudyRoleResolvers.Mutation,
     ...StudyTypeResolvers.Mutation,
+    ...DepartmentResolvers.Mutation,
+    ...ServiceResolvers.Mutation,
   },
   Condition: {
     ...conditionDataLoader,
@@ -39,6 +47,12 @@ const resolvers = {
   StudyType: {
     ...studyTypeDataLoader
   },
+  Department: {
+    ...departmentDataLoader
+  },
+  Service: {
+    ...serviceDataLoader
+  }
 };
 
 export default resolvers;
