@@ -591,6 +591,24 @@ enum Enum_RoleName {
     updateDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketUpdateInput ):DiseaseTargetMarket  
     upsertDiseaseTargetMarket(where:DiseaseTargetMarketWhereUniqueInput!, data:DiseaseTargetMarketCreateInput ):DiseaseTargetMarket    
     deleteDiseaseTargetMarket(where: DiseaseTargetMarketWhereUniqueInput!):DiseaseTargetMarket,
+
+    # StudyType
+    createStudyType(data:StudyTypeCreateInput):StudyType
+    updateStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeUpdateInput ):StudyType  
+    upsertStudyType(where:StudyTypeWhereUniqueInput!, data:StudyTypeCreateInput ):StudyType    
+    deleteStudyType(where: StudyTypeWhereUniqueInput!):StudyType,
+
+    # StudyDesign
+    createStudyDesign(data:StudyDesignCreateInput):StudyDesign
+    updateStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignUpdateInput ):StudyDesign  
+    upsertStudyDesign(where:StudyDesignWhereUniqueInput!, data:StudyDesignCreateInput ):StudyDesign    
+    deleteStudyDesign(where: StudyDesignWhereUniqueInput!):StudyDesign,
+
+    # StudyRole
+    createStudyRole(data:StudyRoleCreateInput):StudyRole
+    updateStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleUpdateInput ):StudyRole  
+    upsertStudyRole(where:StudyRoleWhereUniqueInput!, data:StudyRoleCreateInput ):StudyRole    
+    deleteStudyRole(where: StudyRoleWhereUniqueInput!):StudyRole,
   }
 
 
@@ -602,6 +620,18 @@ enum Enum_RoleName {
     # DiseaseTargetMarket
     diseaseTargetMarkets:[DiseaseTargetMarket]
     diseaseTargetMarket(id:String!):DiseaseTargetMarket,
+
+    # StudyType
+    studyTypes:[StudyType]
+    studyType(id:String!):StudyType,
+
+    # StudyDesign
+    studyDesigns:[StudyDesign]
+    studyDesign(id:String!):StudyDesign,
+
+    # StudyRole
+    studyRoles:[StudyRole]
+    studyRole(id:String!):StudyRole,
   }
   
 `;
