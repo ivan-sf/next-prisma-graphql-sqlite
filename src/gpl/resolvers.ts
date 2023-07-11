@@ -1,15 +1,15 @@
-import { companyDataLoader } from "../api/company/dataLoaders";
-import { CompanyResolvers } from "../api/company/resolvers";
+import { classCostCenterDataLoader } from "../api/classcostcenter/dataLoaders";
+import { ClassCostCenterResolvers } from "../api/classcostcenter/resolvers";
 
 const resolvers = {
   Query: {
-    ...CompanyResolvers.Query,
+    ...ClassCostCenterResolvers.Query,
   },
   Mutation: {
-    ...CompanyResolvers.Mutation,
+    ...ClassCostCenterResolvers.Mutation,
   },
   Company: {
-    ...companyDataLoader
+    ...classCostCenterDataLoader
   }
 };
 
